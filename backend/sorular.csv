@@ -1,0 +1,111 @@
+Topic,QuestionPrompt,CorrectResponse
+Matematik,5+7 kactir? Sadece rakamla yaz.,12
+Matematik,15-8 kactir? Sadece rakamla yaz.,7
+Matematik,4x6 kactir? Sadece rakamla yaz.,24
+Matematik,36/4 kactir? Sadece rakamla yaz.,9
+Matematik,2 uzeri 3 kactir? Sadece rakamla yaz.,8
+Matematik,Karekok 81 kactir? Sadece rakamla yaz.,9
+Matematik,3x-6=0 denkleminde x kactir?,2
+Matematik,5x+10=25 denkleminde x kactir?,3
+Matematik,Bir ucgenin ic acilari toplami kac derecedir?,180
+Matematik,120 sayisinin yuzde 10u kactir?,12
+Matematik,3/4 kesrinin ondalik gosterimi nedir?,0.75
+Matematik,5 faktoryel (5!) kactir?,120
+Matematik,log taban 10da 100 kactir?,2
+Matematik,sin(30 derece) kactir?,0.5
+Matematik,cos(60 derece) kactir?,0.5
+Matematik,x^2 - 9 = 0 denkleminin pozitif koku kactir?,3
+Matematik,f(x)=2x+5 ise f(3) kactir?,11
+Matematik,Mutlak deger icinde -15 kactir?,15
+Matematik,2 4 6 8 dizisinin 5. elemani kactir?,10
+Matematik,7nin karesi kactir?,49
+Matematik,1den 10a kadar olan sayilarin toplami kactir?,55
+Matematik,f(x)=x^2 fonksiyonunun turevi nedir? Sadece denklemi yaz.,2x
+Matematik,f(x)=x^3 fonksiyonunun x=2deki turevi kactir?,12
+Matematik,integral 2x dxin belirsiz integrali nedir? (sabit c yi bosver),x^2
+Matematik,0 faktoryel (0!) kactir?,1
+Matematik,9 12 15 ucgeninde hipotenus kactir?,15
+Matematik,2 basamakli en buyuk asal sayi kactir?,97
+Matematik,144 sayisinin karekoku kactir?,12
+Matematik,f(x) = 4x^2 - 3x + 2 fonksiyonunun x=1deki degeri kactir?,3
+Matematik,x^2 - 5x + 6 = 0 denkleminin kokleri toplami kactir?,5
+Matematik,Bir dairenin cevresi formulu nedir? Sadece formulu yaz.,2*pi*r
+Matematik,Kure hacmi formulu nedir? Sadece formulu yaz.,(4/3)*pi*r^3
+Matematik,2 tabaninda log 8 kactir?,3
+Matematik,Dik kenarlari 3 ve 4 olan dik ucgenin alani kactir?,6
+Matematik,1000 sayisinin 10 tabaninda logaritmasi kactir?,3
+Matematik,e uzeri ln(5) kactir?,5
+Matematik,x^3 - 8 = 0 denkleminin gercel koku kactir?,2
+Matematik,(a+b)^2 acilimindaki ortadaki terim nedir?,2ab
+Matematik,5in kupkoku alinip karesi alinirsa ustel gosterimi nasil olur?,5^(2/3)
+Matematik,Altigenin ic acilari toplami kac derecedir?,720
+Matematik,f(x)=sin(x) fonksiyonunun x=0 daki turevi kactir?,1
+Matematik,limit x 0a giderken sin(x)/x kactir?,1
+Matematik,integral x^2 dx 0dan 3e belirli integral sonucu kactir?,9
+Matematik,Matrislerde birim matrisin determinanti kactir?,1
+Matematik,i^2 karmasik sayilarda kaca esittir?,-1
+Matematik,f(x y) = x^2 * y islevinde xe gore kismi turev nedir?,2xy
+Matematik,Taylor serisinde e^x aciliminin ilk terimi nedir?,1
+Matematik,y' = y diferansiyel denkleminin genel cozumu nedir? (sabit C),C*e^x
+Matematik,f(x) = ln(x)in turevi nedir?,1/x
+Matematik,Altin oran (phi) yaklasik degeri kactir? Ilk iki ondalik basamagi ver.,1.61
+Felsefe Tarihi,Dusunuorum oyleyse varim (Cogito ergo sum) sozu kime aittir?,Rene Descartes
+Felsefe Tarihi,Magara alegorisi hangi Antik Yunan filozofuna aittir?,Platon
+Felsefe Tarihi,Bilgi guctur (Scientia potentia est) sozu kime aittir?,Francis Bacon
+Felsefe Tarihi,Etika adli eser hangi filozofa aittir?,Baruch Spinoza
+Felsefe Tarihi,Amac araci mesru kilar dusuncesiyle taninan Prens adli eserin yazari kimdir?,Niccolo Machiavelli
+Felsefe Tarihi,Immanuel Kantin ahlak felsefesindeki temel kuralin adi nedir?,Kategorik Imperatif
+Felsefe Tarihi,Tanri oldu sozuyle taninan ve Ustinsan (Ubermensch) kavramini ortaya atan filozof kimdir?,Friedrich Nietzsche
+Felsefe Tarihi,Das Kapitalin ve Komunist Manifestonun yazarlarindan olan Alman filozof kimdir?,Karl Marx
+Felsefe Tarihi,Formlar (Idealar) teorisi hangi filozofa aittir?,Platon
+Felsefe Tarihi,Bildigim tek sey hicbir sey bilmedigimdir sozu kime atfedilir?,Sokrates
+Felsefe Tarihi,Varlik ve Hiclik adli eserin yazari olan Fransiz varoluscu filozof kimdir?,Jean-Paul Sartre
+Felsefe Tarihi,Tabula Rasa (Bos Levha) kavramiyla insan zihnini tanimlayan empirist filozof kimdir?,John Locke
+Felsefe Tarihi,Insan insanin kurdudur (Homo homini lupus) diyerek devleti bir Leviathan olarak tanimlayan dusunur kimdir?,Thomas Hobbes
+Felsefe Tarihi,Tinin Fenomenolojisi adli eserinde diyalektik yontemi gelistiren Alman filozof kimdir?,Georg Wilhelm Friedrich Hegel
+Felsefe Tarihi,Dilimin sinirlari dunyamin sinirlaridir sozu hangi filozofa aittir?,Ludwig Wittgenstein
+Felsefe Tarihi,Devlet kavramini utopik bir adada anlatan Utopia adli eserin yazari kimdir?,Thomas More
+Felsefe Tarihi,Ockhamin Usturasi prensibi en basit aciklamanin en iyisi oldugunu savunur. Bu prensip kime aittir?,William of Ockham
+Felsefe Tarihi,Stoa felsefesinin en onemli temsilcilerinden biri olan Roma Imparatoru kimdir?,Marcus Aurelius
+Felsefe Tarihi,Fenomenoloji akiminin kurucusu kabul edilen filozof kimdir?,Edmund Husserl
+Felsefe Tarihi,Toplum Sozlesmesi adli eseriyle Fransiz Devrimini etkileyen dusunur kimdir?,Jean-Jacques Rousseau
+Hukuk,Yargitay kararlari isiginda isciye odenmeyen kidem tazminati icin zamanasimi suresi kac yildir? Sadece rakam.,5
+Hukuk,Turk hukukunda olagan evlenme yasi kactir? Sadece rakamla yaz.,18
+Hukuk,Anayasa Mahkemesine bireysel basvuru suresi kararin tebliginden itibaren kac gundur?,30
+Hukuk,Isci acisindan hakli nedenle derhal fesih suresi olayin ogrenilmesinden itibaren kac is gundur?,6
+Hukuk,Ceza hukukunda kanunsuz suc ve ceza olmaz ilkesinin Latince adi nedir?,Nullum crimen sine lege
+Hukuk,Temyiz suresi ceza davalarinda kararin tefhim veya tebliginden itibaren kac gundur?,15
+Hukuk,Turk Medeni Kanununa gore tam ehliyetli olmak icin ergin olmak ve neyi bulunmamak gerekir?,Kisitli olmamak
+Hukuk,Yargitay Hukuk Genel Kurulu kisaca nasil kisaltilir?,YHGK
+Hukuk,Bosanma davasinda velayet karari verilirken oncelikle neyin ustun yarari gozetilir?,Cocugun ustun yarari
+Hukuk,Istinaf kanun yoluna basvurulan merci neresidir?,Bolge Adliye Mahkemesi
+Hukuk,Yargitay kararlarina gore fazla mesai ucretinin ispat yuku kime aittir?,Isciye
+Hukuk,Bir sucun islenmesinde kanuni tanimdaki unsurlari bilerek ve isteyerek gerceklestirmeye ne denir?,Kast
+Hukuk,Haksiz fiil nedeniyle acilacak maddi ve manevi tazminat davalarinda zamanasimi suresi fiilin ogrenilmesinden itibaren kac yildir?,2
+Hukuk,TCK mad 53te duzenlenen hak yoksunluklari hangi cezanin infazi tamamlanincaya kadar surer?,Hapis cezasi
+Hukuk,Yargitay kararlarinda gunduz sayilan zaman dilimi icinde calisan iscinin gunluk azami calisma suresi kac saattir?,11
+Hukuk,Borclar Kanununa gore sozlesme serbestisi ilkesinin sinirlarindan biri nedir? (Iki kelime ile),Ahlaka aykirilik
+Hukuk,Trafik kazalarindan dogan tazminat taleplerinde gorevli mahkeme genel olarak hangisidir?,Asliye Ticaret Mahkemesi
+Hukuk,Isci ile isveren arasindaki alacak davalarinda dava acmadan once basvurulmasi zorunlu olan yol nedir?,Arabuluculuk
+Hukuk,Miras hukukunda sakli payli mirascilarin haklarinin ihlal edilmesi durumunda acilan davanin adi nedir?,Tenkis davasi
+Hukuk,Yargitay uygulamasinda cep telefonu kayitlari (HTS) tek basina mahkumiyet icin yeterli delil midir? (Evet/Hayir),Hayir
+ISO Standartlari,Kalite Yonetim Sistemi icin gereklilikleri belirleyen ISO standartinin numarasi nedir?,ISO 9001
+ISO Standartlari,Bilgi Guvenligi Yonetim Sistemi standardinin numarasi nedir?,ISO/IEC 27001
+ISO Standartlari,Cevre Yonetim Sistemi icin gereklilikleri belirleyen ISO standardinin numarasi nedir?,ISO 14001
+ISO Standartlari,Is Sagligi ve Guvenligi Yonetim Sistemi standardinin numarasi nedir?,ISO 45001
+ISO Standartlari,Gida Guvenligi Yonetim Sistemi standardinin numarasi nedir?,ISO 22000
+ISO Standartlari,Yapay Zeka Yonetim Sistemi (AIMS) icin gereklilikleri belirleyen ISO/IEC standardinin numarasi nedir?,ISO/IEC 42001
+ISO Standartlari,Enerji Yonetim Sistemi standardinin numarasi nedir?,ISO 50001
+ISO Standartlari,ISO 9001 standardinda musteri beklentilerini asmayi amaclayan temel kalite yonetim prensibinin adi nedir?,Musteri Odaklilik
+ISO Standartlari,Risk Yonetimi standardinin numarasi nedir?,ISO 31000
+ISO Standartlari,Bilgi teknolojileri hizmet yonetimi standardinin numarasi nedir?,ISO/IEC 20000
+ISO Standartlari,Kisisel verilerin gizliligi ve yonetimi ile ilgili ISO standardinin numarasi nedir?,ISO/IEC 27701
+ISO Standartlari,Tibbi cihazlar icin kalite yonetim sistemi standardinin numarasi nedir?,ISO 13485
+ISO Standartlari,Sosyal Sorumluluk kilavuzu olarak bilinen ISO standardinin numarasi nedir?,ISO 26000
+ISO Standartlari,Otomotiv sektorunde kalite yonetim sistemi gerekliliklerini belirleyen standart nedir?,IATF 16949
+ISO Standartlari,ISO standartlarinin surekli iyilestirme dongusu kisaca nasil adlandirilir?,PUKO
+ISO Standartlari,Is surekliligi yonetim sistemi standardinin numarasi nedir?,ISO 22301
+ISO Standartlari,ISOnun acilimi Ingilizce olarak nedir?,International Organization for Standardization
+ISO Standartlari,Laboratuvarlarin yeterliligi ve akreditasyonu icin kullanilan ISO standardinin numarasi nedir?,ISO/IEC 17025
+ISO Standartlari,Musteri memnuniyeti ve sikayet yonetimi standardinin numarasi nedir?,ISO 10002
+ISO Standartlari,Yapay zeka sistemlerinde yansizlik ve risk degerlendirmesine odaklanan ISO 42001 cercevesinde kilit kelime nedir?,Guvenilirlik
