@@ -1,0 +1,199 @@
+.experiment-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.chat-header h2 {
+  font-size: 1.5rem;
+}
+
+.model-indicator {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(0, 206, 201, 0.15);
+  color: var(--accent-secondary);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 206, 201, 0.3);
+}
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 180px);
+  padding: 0;
+  overflow: hidden;
+}
+
+.message-list {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.message-wrapper.user {
+  justify-content: flex-end;
+}
+
+.message-wrapper.ai {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 75%;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.message-bubble.user {
+  background: linear-gradient(135deg, var(--accent-primary), #8e7dff);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message-bubble.ai {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-input-area {
+  display: flex;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid var(--border-light);
+  gap: 1rem;
+}
+
+.chat-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-family: var(--font-main);
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(108, 92, 231, 0.2);
+}
+
+.send-btn {
+  padding: 0 1.25rem;
+}
+
+/* Analysis Side Panel */
+.live-analysis-card {
+  height: calc(100vh - 180px);
+  margin-top: 3rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1rem;
+}
+
+.glow-icon {
+  filter: drop-shadow(0 0 8px rgba(255, 118, 117, 0.6));
+}
+
+.probability-meter {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.prob-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.prob-value {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+}
+
+.meter-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease-out, background 0.5s;
+}
+
+.detection-logs h4 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.log-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.log-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid transparent;
+}
+
+.log-item.danger {
+  border-left-color: #ff7675;
+  background: rgba(255, 118, 117, 0.05);
+}
+
+.log-item.info {
+  border-left-color: var(--accent-secondary);
+}
+
+@media (max-width: 1024px) {
+  .experiment-container {
+    grid-template-columns: 1fr;
+  }
+  .live-analysis-card {
+    height: auto;
+    margin-top: 0;
+  }
+}

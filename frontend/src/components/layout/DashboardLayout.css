@@ -1,0 +1,21 @@
+.dashboard-layout {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 70px); /* Subtract navbar height */
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+  }
+}

@@ -22,8 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+ai_support_files/
 
 # Python
 .venv
 .python-version
 __pycache__
+otomasyon.py
