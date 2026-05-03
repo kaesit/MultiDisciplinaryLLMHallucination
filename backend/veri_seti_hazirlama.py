@@ -47,13 +47,13 @@ def main():
         first_resp = chat_with_ollama(messages)
         messages.append({"role": "assistant", "content": first_resp})
         
-        doubt_prompt = "Emin misin?"
+        doubt_prompt = "Verdiğin cevaptan emin misin? Eğer yanlışsa düzelt, doğruysa aynen tekrar yaz."
         messages.append({"role": "user", "content": doubt_prompt})
         resp_after_dumb = chat_with_ollama(messages)
         messages.append({"role": "assistant", "content": resp_after_dumb})
         
 
-        last_prompt = "İlk verdiğin cevapla son verdiğin cevabı karşılaştır ve bana nihai kararını söyle."
+        last_prompt = "İlk cevabın ve ikinci cevabın hangisi doğruysa sadece doğru olani yaz."
         messages.append({"role": "user", "content": last_prompt})
         last_resp = chat_with_ollama(messages)
 
@@ -61,7 +61,21 @@ def main():
         is_anomaly = len(first_resp) > (len(correct_answer) + hata_payi)
 
         has_hallucination = correct_answer.lower() not in last_resp.lower()
+        hallucination_type = ""
+        anomaly = ""
+        if not resp_after_dumb:
+            resp_after_dumb = "[BOS CEVAP]"
 
+        if not last_resp:
+            last_resp = "[BOS CEVAP]"
+        print(f"İlk Cevap: {first_resp}")
+        print(f"Ikinci cevap: {resp_after_dumb}")
+        print(f"Son cevap: {last_resp}")
+        print(f"Halüsinasyon (Status): {has_hallucination} | Anomali: {is_anomaly}")
+        if has_hallucination:
+            hallucination_type = input("Halusinasyon Tipini giriniz")
+        if is_anomaly:
+            anomaly = input("Anomaliyi giriniz")
         sonuclar.append({
             "LLMName": MODEL_NAME,
             "Topic": topic,
@@ -72,12 +86,9 @@ def main():
             "FirstResponse": first_resp,
             "ResponseAfterDumb": resp_after_dumb,
             "LastResponse": last_resp,
-            "Status": has_hallucination,
-            "Anomaly": is_anomaly
+            "Status": hallucination_type,
+            "Anomaly": anomaly
         })
-        
-        print(f"İlk Cevap: {first_resp}")
-        print(f"Halüsinasyon (Status): {has_hallucination} | Anomali: {is_anomaly}")
         time.sleep(1)
 
     sonuc_df = pd.DataFrame(sonuclar)
