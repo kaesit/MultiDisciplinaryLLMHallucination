@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { BarChart2, MessageSquare, Database, Settings } from 'lucide-react';
+import { BarChart2, MessageSquare, Table2, Database, Settings } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar: React.FC = () => {
@@ -21,6 +21,14 @@ const Sidebar: React.FC = () => {
         >
           <MessageSquare className="sidebar-icon" />
           <span>Experiment</span>
+        </NavLink>
+        
+        <NavLink 
+          to="/dashboard/results" 
+          className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+        >
+          <Table2 className="sidebar-icon" />
+          <span>Model Results</span>
         </NavLink>
         
         <NavLink 
