@@ -1,26 +1,45 @@
 ﻿# MultiDisciplinaryLLMHallucination
 
- Halüsinasyon Analizi ve Test Sonuçları
-Bu bölümde, projenin güvenilirliğini ölçmek amacıyla gerçekleştirilen kapsamlı halüsinasyon testlerine dair detaylar yer almaktadır.
+# 🔬 LLM Halüsinasyon Tespit ve Analiz Raporu
 
-🔍 Test Metodolojisi
-Sistemi uç senaryolarda test etmek ve modelin verdiği yanıtların tutarlılığını ölçmek için özel bir test döngüsü oluşturulmuştur.
+Bu çalışma, popüler yerel LLM modellerinin (Mistral, Phi-3 ve Qwen2.5) Türkçe dilindeki halüsinasyon (uydurma) eğilimlerini akademik düzeyde ölçümlemek amacıyla yapılmıştır.
 
-Toplam Test Sorusu: 120 soru
+## 🤖 Test Edilen Modeller
 
-Kullanılan Araçlar: Python (Analiz ve ölçümleme), Pandas (Veri işleme).
+Bu araştırma kapsamında aşağıdaki 3 farklı mimari ve parametre büyüklüğündeki model kullanılmıştır:
 
-Test Kapsamı: Modelin tekrarlı sorularda tutarlılığı, mantıksal doğruluk payı ve hastane jargonuna olan hakimiyeti ölçülmüştür.
+1.  **Mistral (7B)**: Dengeli ve genel amaçlı 7 milyar parametreli model.
+2.  **Qwen 2.5 (3B)**: Alibaba tarafından geliştirilen, modern ve kompakt 3 milyar parametreli model.
+3.  **Phi-3 (3.8B)**: Microsoft'un geliştirdiği, SML (Small Language Model) segmentinin en güçlü temsilcilerinden.
 
-📂 Dosya Yapısı ve İçerik
+---
 
-test_verileri.csv: 1335 satırlık ham test verilerini içerir. Modelin her bir soruya verdiği ilk ve son yanıtlar ile başarı durumları bu dosyada kayıtlıdır.
+## 📊 Kategori Bazlı Halüsinasyon Oranları (%)
 
-eval_hallucination_tests.py: Testleri otomatize eden ve sonuçları CSV formatına dönüştüren analiz betiğidir.
+150 farklı soru üzerinden 3'er tur yapılan testler sonucunda modellerin uzmanlık alanlarına göre yanılma payları aşağıda sunulmuştur:
 
-⚠️ Önemli Not: 1335 Satır Verinin Tamamını Görüntüleme
-GitHub, performans nedenleriyle web arayüzünde CSV dosyalarının sadece ilk kısmını (yaklaşık 120 satır) önizleme olarak göstermektedir. Verilerin tamamını (1335 satır) incelemek için:
+| Kategori | Mistral (7B) | Qwen 2.5 (3B) | Phi-3 (3.8B) |
+| :--- | :---: | :---: | :---: |
+| **Matematik** | %31.11 | %24.44 | **%11.11** |
+| **Manipulasyon** | %24.44 | %22.22 | **%13.33** |
+| **Hukuk ve Felsefe** | **%24.00** | %24.00 | %20.89 |
+| **Uluslararası Standartlar** | **%16.44** | %23.56 | %25.11 |
 
-Dosya sayfasındaki "Raw" butonuna tıklayarak veriyi ham metin olarak görüntüleyebilir,
+---
 
-Veya dosyayı bilgisayarınıza indirerek Excel / VS Code aracılığıyla tüm satırlara ulaşabilirsiniz.
+## 📈 Görsel İstatistik Analizi
+
+Modellerin genel hata payları ve kategorik bazdaki dağılımları aşağıdaki grafikte detaylandırılmıştır:
+
+![Akademik Karşılaştırma Grafiği](Academic_Reports/Grafik.png)
+
+---
+
+## 🎓 Temel Bulgular ve Sonuç
+
+*   **En Güvenilir Model:** **Phi-3 (3.8B)**, özellikle Matematik ve Mantık/Manipulasyon dallarında diğer modellere kıyasla anlamlı derecede daha düşük halüsinasyon oranı göstermiştir.
+*   **Zayıf Alanlar:** Mistral (7B) modelinin en çok zorlandığı alan karmaşık matematiksel işlemler olurken; Qwen 2.5 (3B) tüm dökümlerde ortalama bir performans sergilemiştir.
+*   **Akademik Çıktı:** Tüm sonuçlar, projenin `Academic_Reports/Rapor.md` dosyasında soru bazlı olarak detaylandırılmış ve `LLM_Final_Akademik_Rapor.xlsx` dosyasına akademik tablo formatında aktarılmıştır.
+
+---
+*Bu çalışma LLM Halüsinasyon Tespit Sistemi aracılığıyla otomatik olarak üretilmiştir.*
