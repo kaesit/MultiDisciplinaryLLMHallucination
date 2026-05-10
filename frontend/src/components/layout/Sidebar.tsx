@@ -28,7 +28,7 @@ const Sidebar: React.FC = () => {
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <Table2 className="sidebar-icon" />
-          <span>Model Sonuçları</span>
+          <span>Model Results</span>
         </NavLink>
         
         <NavLink 
