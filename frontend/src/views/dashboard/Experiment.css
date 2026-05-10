@@ -197,3 +197,25 @@
     margin-top: 0;
   }
 }
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.log-item.success {
+  border-left-color: #00b894;
+  background: rgba(0, 184, 148, 0.05);
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
