@@ -31,7 +31,7 @@ Bu araştırma kapsamında aşağıdaki 3 farklı mimari ve parametre büyüklü
 
 Modellerin genel hata payları ve kategorik bazdaki dağılımları aşağıdaki grafikte detaylandırılmıştır:
 
-![Akademik Karşılaştırma Grafiği](Academic_Reports/Grafik.png)
+![Akademik Karşılaştırma Grafiği](research/graphics/2984582d-f9f5-4c14-860f-99fc66ecdf9b.jpg)
 
 ---
 
