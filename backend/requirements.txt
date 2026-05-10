@@ -1,3 +1,7 @@
-fastapi[standart]
+fastapi[standard]
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
 pandas
 matplotlib
+python-dotenv
