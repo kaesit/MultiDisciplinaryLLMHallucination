@@ -1,3 +1,4 @@
+sep=;
 Kategori;Soru ID;Soru Metni;Doğru Cevap;Test Edilen Model;Modelin Yanıtı;Halüsinasyon?;Doğruluk Skoru
 Hukuk_ve_Felsefe;HUK-001;Türkiye Cumhuriyeti Anayasası'nın 2. maddesine göre devletin nitelikleri nelerdir?;Madde 2: 'Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk Devletidir.';mistral:7b;" Türkiye Cumhuriyeti Anayasası'nda, 2. Maddede ifade edilen devletin nitelikleri aşağıdaki şekilde tanımlanmaktadır:
 
