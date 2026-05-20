@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Send, AlertTriangle, ShieldAlert, Loader2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Send, AlertTriangle, ShieldAlert, Loader2, Cpu, Activity, Database } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import './Experiment.css';
@@ -14,12 +14,22 @@ const Experiment: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, sender: 'ai', text: 'System ready. I am an LLM Model. Please begin your adversarial test scenario.' }
+    { id: 1, sender: 'ai', text: 'System ready. Mistral 7B & DL Classification Model initialized. Please begin your adversarial test scenario.' }
   ]);
   const [hallucinationProb, setHallucinationProb] = useState(0);
+  const [hallucinationClass, setHallucinationClass] = useState<string>('Standby');
   const [detectionLogs, setDetectionLogs] = useState<{type: string, message: string}[]>([
     { type: 'info', message: 'Waiting for interaction...' }
   ]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +41,7 @@ const Experiment: React.FC = () => {
     setMessages(prev => [...prev, newUserMsg]);
     setInput('');
     setIsLoading(true);
-    setDetectionLogs([{ type: 'info', message: 'Generating response via API...' }]);
+    setDetectionLogs([{ type: 'info', message: 'Generating response via Mistral (Ollama)...' }]);
 
     try {
       // 1. Get Chat Response
@@ -40,7 +50,7 @@ const Experiment: React.FC = () => {
           role: m.sender === 'ai' ? 'assistant' : 'user',
           content: m.text
         })),
-        model_name: "qwen3.5:4b" // Or whichever model is being tested
+        model_name: "mistral"
       };
 
       const chatRes = await fetch('/api/chat', {
@@ -60,7 +70,7 @@ const Experiment: React.FC = () => {
       }]);
 
       // 2. Evaluate for Hallucinations
-      setDetectionLogs([{ type: 'info', message: 'Analyzing response for hallucinations...' }]);
+      setDetectionLogs([{ type: 'info', message: 'Analyzing response with Deep Learning .h5 Model...' }]);
       
       const predictRes = await fetch('/api/predict', {
         method: 'POST',
@@ -75,11 +85,14 @@ const Experiment: React.FC = () => {
       const predictData = await predictRes.json();
 
       // Update UI with real prediction data
-      const prob = Math.round(predictData.hallucination_score * 100);
+      const prob = Math.round(predictData.confidence * 100);
       setHallucinationProb(prob);
+      setHallucinationClass(predictData.hallucination_type);
 
       const logs = [];
-      if (prob > 75) {
+      const isHallucination = predictData.hallucination_score > 0.5;
+      
+      if (isHallucination) {
         logs.push({ type: 'danger', message: `Type: ${predictData.hallucination_type}` });
         logs.push({ type: 'danger', message: `Reasoning: ${predictData.details}` });
       } else {
@@ -92,21 +105,30 @@ const Experiment: React.FC = () => {
 
     } catch (error) {
       console.error(error);
-      setDetectionLogs([{ type: 'danger', message: 'API connection error. Ensure backend is running.' }]);
+      setDetectionLogs([{ type: 'danger', message: 'API connection error. Ensure backend is running and packages are installed.' }]);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const isDanger = hallucinationProb > 60 && hallucinationClass !== 'none' && hallucinationClass !== 'Standby' && !['yok', 'dogru', '0'].includes(hallucinationClass.toLowerCase());
+  const probColor = isDanger ? '#ff4757' : '#2ed573';
+
   return (
     <div className="experiment-container">
-      <div className="chat-section">
+      <div className="chat-section glass-panel">
         <div className="chat-header">
-          <h2>Adversarial Chat Interface</h2>
-          <span className="model-indicator">Connected: Evaluator Model</span>
+          <div className="header-title">
+            <Cpu className="title-icon" />
+            <h2>Adversarial Interface</h2>
+          </div>
+          <div className="model-badges">
+            <span className="model-indicator mistral"><Database size={14}/> Mistral</span>
+            <span className="model-indicator dl-model"><Activity size={14}/> DL .h5 Model</span>
+          </div>
         </div>
         
-        <Card className="chat-window">
+        <div className="chat-window">
           <div className="message-list">
             {messages.map(msg => (
               <div key={msg.id} className={`message-wrapper ${msg.sender}`}>
@@ -118,10 +140,12 @@ const Experiment: React.FC = () => {
             {isLoading && (
               <div className="message-wrapper ai">
                 <div className="message-bubble ai typing-indicator">
-                  <Loader2 className="spin" size={16} /> Generating...
+                  <div className="dot-typing"></div>
+                  Generating...
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
           
           <form className="chat-input-area" onSubmit={handleSend}>
@@ -133,48 +157,63 @@ const Experiment: React.FC = () => {
               className="chat-input"
               disabled={isLoading}
             />
-            <Button type="submit" variant="primary" className="send-btn" disabled={isLoading}>
-              <Send size={18} />
-            </Button>
+            <button type="submit" className="send-btn" disabled={isLoading}>
+              {isLoading ? <Loader2 className="spin" size={20} /> : <Send size={20} />}
+            </button>
           </form>
-        </Card>
+        </div>
       </div>
 
       <div className="analysis-section">
-        <Card className="live-analysis-card">
+        <div className="live-analysis-card glass-panel">
           <div className="card-header">
-            <h3>Live Detection</h3>
-            <ShieldAlert className={hallucinationProb > 75 ? 'text-danger glow-icon' : 'text-success'} />
+            <h3>Live Telemetry</h3>
+            <ShieldAlert className={`shield-icon ${isDanger ? 'pulse-danger' : 'glow-success'}`} />
           </div>
           
           <div className="probability-meter">
-            <span className="prob-label">Hallucination Probability</span>
-            <div className="prob-value" style={{ color: hallucinationProb > 75 ? '#ff7675' : '#00b894' }}>
+            <span className="prob-label">
+              {hallucinationClass === 'Standby' 
+                ? "Awaiting Input..." 
+                : (!isDanger ? "Factual Confidence (No Hallucination)" : "Hallucination Confidence")}
+            </span>
+            <div className="prob-value" style={{ color: probColor, textShadow: `0 0 20px ${probColor}80` }}>
               {hallucinationProb}%
             </div>
-            <div className="meter-bar">
-              <div 
-                className="meter-fill" 
-                style={{ 
-                  width: `${hallucinationProb}%`,
-                  background: hallucinationProb > 75 ? '#ff7675' : '#00b894'
-                }}
-              ></div>
+            <div className="meter-wrapper">
+              <div className="meter-bar">
+                <div 
+                  className="meter-fill" 
+                  style={{ 
+                    width: `${hallucinationProb}%`,
+                    background: `linear-gradient(90deg, transparent, ${probColor})`,
+                    boxShadow: `0 0 15px ${probColor}`
+                  }}
+                ></div>
+              </div>
+            </div>
+            
+            <div className={`class-badge ${isDanger ? 'danger' : 'safe'}`}>
+              Class: {hallucinationClass.toUpperCase()}
             </div>
           </div>
 
           <div className="detection-logs">
-            <h4>Real-time Flags</h4>
+            <h4><Activity size={16} /> Real-time Flags</h4>
             <ul className="log-list">
               {detectionLogs.map((log, i) => (
-                <li key={i} className={`log-item ${log.type}`}>
-                  {log.type === 'danger' && <AlertTriangle size={14} />}
+                <li key={i} className={`log-item ${log.type} fade-in`}>
+                  <div className="log-icon">
+                    {log.type === 'danger' ? <AlertTriangle size={14} /> : 
+                     log.type === 'success' ? <ShieldAlert size={14} /> :
+                     <Activity size={14} />}
+                  </div>
                   <span>{log.message}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );

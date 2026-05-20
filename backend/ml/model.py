@@ -3,44 +3,52 @@ import random
 import json
 import re
 import requests
+import pickle
+import numpy as np
 
-# Try to import tensorflow and numpy for the ML model
 try:
     import tensorflow as tf
-    import numpy as np
-    TF_AVAILABLE = True
+    import sklearn
+    ML_AVAILABLE = True
 except ImportError:
-    TF_AVAILABLE = False
-    print("WARNING: TensorFlow or NumPy is not installed. Falling back to Ollama or Mock predictor.")
+    ML_AVAILABLE = False
+    print("WARNING: TensorFlow or Scikit-Learn is not installed. Falling back to Ollama or Mock predictor.")
 
 class HallucinationPredictor:
     def __init__(self):
         self.is_loaded = False
         self.model = None
+        self.vectorizer = None
+        self.encoder = None
         
-        # Use relative path for the model to avoid hardcoded drive letters
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.model_path = os.path.join(current_dir, "models", "halusinasyon_siniflandirici_dl.h5")
+        self.vectorizer_path = os.path.join(current_dir, "models", "vectorizers", "tfidf_vectorizer.pkl")
+        self.encoder_path = os.path.join(current_dir, "models", "encoders", "label_encoder.pkl")
         
         self.ollama_url = "http://localhost:11434/api/chat"
-        self.evaluator_model = "qwen3.5:4b"
+        # User requested to use Mistral
+        self.evaluator_model = "mistral"
         
-        # We will load the model manually via FastAPI startup events
-        # self.load_model()
-
     def load_model(self):
-        if TF_AVAILABLE and os.path.exists(self.model_path):
+        if ML_AVAILABLE:
             try:
+                # Load Deep Learning model
                 self.model = tf.keras.models.load_model(self.model_path)
-                print(f"Successfully loaded Deep Learning model from: {self.model_path}")
+                
+                # Load Vectorizer and Encoder
+                with open(self.vectorizer_path, 'rb') as f:
+                    self.vectorizer = pickle.load(f)
+                with open(self.encoder_path, 'rb') as f:
+                    self.encoder = pickle.load(f)
+                    
+                print(f"Successfully loaded Deep Learning model, vectorizer, and encoder.")
                 self.is_loaded = True
             except Exception as e:
-                print(f"Error loading Deep Learning model: {e}")
+                print(f"Error loading ML components: {e}")
                 print("Falling back to Ollama API for predictions.")
         else:
-            if not os.path.exists(self.model_path):
-                print(f"WARNING: Model file not found at {self.model_path}")
-            print("Real ML model not loaded. Falling back to Ollama API or mock predictions.")
+            print("Real ML model not loaded due to missing dependencies. Falling back to Ollama API or mock predictions.")
 
     def predict(self, text: str, domain: str) -> dict:
         """
@@ -48,34 +56,47 @@ class HallucinationPredictor:
         Uses the loaded .h5 ML model if available, otherwise falls back to Ollama API.
         """
         # --- 1. ML Model Prediction Path ---
-        if self.is_loaded and self.model is not None:
+        if self.is_loaded and self.model is not None and self.vectorizer is not None and self.encoder is not None:
             try:
-                # Assuming the model can accept strings (e.g. has a TextVectorization layer)
-                # If your model needs a pre-fitted tokenizer, it should be loaded and applied here.
-                input_tensor = tf.constant([text])
+                # Transform text using the TF-IDF vectorizer
+                vectorized_text = self.vectorizer.transform([text]).toarray()
                 
                 # Get model prediction
-                prediction = self.model.predict(input_tensor)
+                prediction = self.model.predict(vectorized_text)
                 
-                # Assuming binary classification with a sigmoid output where >0.5 means hallucination
-                # Adjust indexing if your model has multiple outputs or softmax classes
-                hallucination_score = float(prediction[0][0]) if len(prediction.shape) > 1 else float(prediction[0])
-                
-                # Determine type based on score (since it's a binary classifier, we assign a generic type)
-                if hallucination_score > 0.5:
-                    h_type = "hallucination_detected"
-                    details = f"DL Model detected a high probability of hallucination for the '{domain}' domain."
-                else:
-                    h_type = "none"
-                    details = "Response appears consistent and factual based on the ML model."
+                # Model likely outputs probabilities for multiple classes (softmax) or a single sigmoid
+                if len(prediction.shape) > 1 and prediction.shape[1] > 1:
+                    predicted_class_index = np.argmax(prediction[0])
+                    confidence = float(prediction[0][predicted_class_index])
                     
-                # Confidence could be how far the score is from the 0.5 threshold
-                confidence = float(abs(hallucination_score - 0.5) * 2.0)
+                    # Convert index back to original label
+                    h_type = str(self.encoder.inverse_transform([predicted_class_index])[0])
+                    
+                    # Determine score based on whether it's classified as hallucination
+                    # If the label is something like 'Yok', 'None', 'Dogru', score should be low
+                    no_hallucination_labels = ['yok', 'none', 'dogru', 'false', '0']
+                    if str(h_type).lower() in no_hallucination_labels:
+                        hallucination_score = 1.0 - confidence
+                        details = "Response appears consistent and factual based on the ML model."
+                    else:
+                        hallucination_score = confidence
+                        details = f"DL Model detected '{h_type}' hallucination for the '{domain}' domain."
+                else:
+                    # Binary classification case
+                    hallucination_score = float(prediction[0][0]) if len(prediction.shape) > 1 else float(prediction[0])
+                    if hallucination_score > 0.5:
+                        h_type = "hallucination_detected"
+                        details = f"DL Model detected a high probability of hallucination for the '{domain}' domain."
+                    else:
+                        h_type = "none"
+                        details = "Response appears consistent and factual based on the ML model."
+                    
+                    confidence = float(abs(hallucination_score - 0.5) * 2.0)
                 
                 return {
                     "hallucination_score": hallucination_score,
                     "hallucination_type": h_type,
-                    "confidence": max(0.1, min(confidence, 1.0)), # bound between 0.1 and 1.0
+                    "confidence": max(0.1, min(confidence, 1.0)),
                     "details": details
                 }
             except Exception as e:
@@ -103,7 +124,7 @@ Respond ONLY with valid JSON. Do not include markdown formatting like ```json or
         }
         
         try:
-            response = requests.post(self.ollama_url, json=payload, timeout=30)
+            response = requests.post(self.ollama_url, json=payload, timeout=300)
             response.raise_for_status()
             result_text = response.json()["message"]["content"].strip()
             
@@ -129,7 +150,7 @@ Respond ONLY with valid JSON. Do not include markdown formatting like ```json or
                 "details": f"Failed to reach Ollama evaluator and ML model failed. Returning mock fallback. Error: {str(e)[:50]}"
             }
 
-    def chat(self, messages: list, model_name: str = "qwen3.5:4b") -> str:
+    def chat(self, messages: list, model_name: str = "mistral") -> str:
         """Generates conversational response via Ollama for the chat interface."""
         payload = {
             "model": model_name,
@@ -137,7 +158,7 @@ Respond ONLY with valid JSON. Do not include markdown formatting like ```json or
             "stream": False
         }
         try:
-            response = requests.post(self.ollama_url, json=payload, timeout=30)
+            response = requests.post(self.ollama_url, json=payload, timeout=300)
             response.raise_for_status()
             return response.json()["message"]["content"].strip()
         except Exception as e:

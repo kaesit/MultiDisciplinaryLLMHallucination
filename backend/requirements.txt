@@ -1,3 +1,5 @@
 fastapi[standart]
 pandas
 matplotlib
+tensorflow
+scikit-learn
