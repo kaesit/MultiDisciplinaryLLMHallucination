@@ -1,5 +1,12 @@
-fastapi[standart]
+fastapi[standard]
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
 pandas
 matplotlib
+<<<<<<< HEAD
 tensorflow
 scikit-learn
+=======
+python-dotenv
+>>>>>>> 8381460c96cc51d8eadc123ed6fa00b161f5920e
